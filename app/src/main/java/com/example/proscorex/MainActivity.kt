@@ -5,6 +5,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.content.Intent
+import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,5 +18,14 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // Set up the button click listener to open PROscore_Junior activity
+        val btnJunior = findViewById<Button>(R.id.btn_PROscore_JUNIOR)
+        btnJunior.setOnClickListener {
+            val intent = Intent(this, PROscore_Junior::class.java)
+            startActivity(intent)
+        }
     }
+
+
+
 }
