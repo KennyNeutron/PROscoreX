@@ -8,48 +8,80 @@
     android:background="#3F51B5"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo"
+        android:text="PROscoreX"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.855" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="375dp"
         android:layout_height="366dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.625">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_PROscore_Nano"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_marginTop="44dp"
+            android:backgroundTint="#03A9F4"
+            android:fontFamily="sans-serif-medium"
             android:text="PROscore NANO"
             android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_PROscore_JUNIOR"
             android:layout_width="300dp"
             android:layout_height="70dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="44dp"
+            android:backgroundTint="#03A9F4"
+            android:fontFamily="sans-serif-medium"
             android:text="PROscore JUNIOR"
             android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_PROscore_Nano" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btn_License"
             android:layout_width="300dp"
             android:layout_height="70dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="44dp"
+            android:backgroundTint="#03A9F4"
             android:text="License"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.481"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_PROscore_JUNIOR" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
