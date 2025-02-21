@@ -13,6 +13,10 @@ class PROscore_Junior : AppCompatActivity() {
     private var TimeLeftInMillis: Long = 10 * 60 * 1000 //10 Minutes
     private var TimeStarted = false
 
+    private lateinit var ShotClockTextView: TextView
+    private var ShotClockTimer: CountDownTimer? = null
+    private var ShotClockTimeLeftInMillis: Long = 24000
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_proscore_junior)  // Ensure you have a corresponding layout file
@@ -25,6 +29,9 @@ class PROscore_Junior : AppCompatActivity() {
 
         //Initialize Timer
         setupTimeControls()
+
+        //Initialize ShotClock
+        setupShotClockControls()
 
         //Start Game Timer
         timerTextView = findViewById(R.id.lbl_GameTime_Value)
@@ -133,16 +140,19 @@ class PROscore_Junior : AppCompatActivity() {
         btn_Start.setOnClickListener{
             if(!TimeStarted){
                 startTimer(TimeLeftInMillis)
+                startShotClock()
                 TimeStarted = true
             }
         }
         btn_Pause.setOnClickListener{
             if(TimeStarted){
                 pauseTimer()
+                pauseShotClock()
                 TimeStarted = false
             }
         }
     }
+    
     private fun startTimer(timeInMillis: Long) {
         timer = object : CountDownTimer(timeInMillis, 100) { // update every 100ms
             override fun onTick(millisUntilFinished: Long) {
@@ -158,14 +168,63 @@ class PROscore_Junior : AppCompatActivity() {
             }
         }.start()
     }
-
+    
     private fun pauseTimer(){
         timer?.cancel()
     }
 
+    private fun setupShotClockControls() {
+        ShotClockTextView = findViewById(R.id.lbl_ShotClock_Value)
+        val btnReset24 = findViewById<Button>(R.id.btn_Reset24)
+        val btnReset14 = findViewById<Button>(R.id.btn_Reset14)
+
+        btnReset24.setOnClickListener{
+            resetShotClock(24000)
+        }
+
+        btnReset14.setOnClickListener{
+            resetShotClock(14000)
+        }
+    }
+
+    private fun resetShotClock(timeInMillis: Long){
+        ShotClockTimer?.cancel()
+        ShotClockTimeLeftInMillis = timeInMillis
+        updateShotClockDisplay()
+        if(TimeStarted){
+            startShotClock()
+        }
+    }
+
+    private fun startShotClock() {
+        ShotClockTimer = object  : CountDownTimer(ShotClockTimeLeftInMillis, 100){
+            override fun onTick(millisUntilFinished: Long) {
+                ShotClockTimeLeftInMillis = millisUntilFinished
+                updateShotClockDisplay()
+            }
+
+            override fun onFinish() {
+                ShotClockTextView.text = "00.0"
+            }
+        }.start()
+    }
+
+    private fun pauseShotClock(){
+        ShotClockTimer?.cancel()
+    }
+
+
+    private fun updateShotClockDisplay() {
+        val seconds = (ShotClockTimeLeftInMillis / 1000).toInt()
+        val millis = (ShotClockTimeLeftInMillis % 1000 / 100).toInt()
+        ShotClockTextView.text= String.format("%02d.%1d", seconds, millis)
+    }
+    
+
     override fun onDestroy() {
         super.onDestroy()
         timer?.cancel() // Stop the timer to avoid memory leaks
+        ShotClockTimer?.cancel()
     }
 
 }
