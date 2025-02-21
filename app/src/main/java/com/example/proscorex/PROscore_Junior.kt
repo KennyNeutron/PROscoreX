@@ -15,16 +15,24 @@ class PROscore_Junior : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_proscore_junior)  // Ensure you have a corresponding layout file
 
-        val btn_HomeFoulAdd = findViewById<Button>(R.id.btn_HomeFoul_Add)
-        val btn_HomeFoulSub = findViewById<Button>(R.id.btn_HomeFoul_Sub)
-        val lbl_HomeFoulValue = findViewById<TextView>(R.id.lbl_Home_Foul_Value)
+        //Initialize Fouls
+        setupFouls()
 
+        //Initialize Scores
+        setupScores()
+
+        //Start Game Timer
+        timerTextView = findViewById(R.id.lbl_GameTime_Value)
+        startTimer(10 * 60 * 1000) // 10 minutes
+    }
+
+    private fun setupFouls() {
+        val btn_HomeFoul_Add = findViewById<Button>(R.id.btn_HomeFoul_Add)
+        val btn_HomeFoul_Sub = findViewById<Button>(R.id.btn_HomeFoul_Sub)
+        val lbl_HomeFoulValue = findViewById<TextView>(R.id.lbl_Home_Foul_Value)
         var int_HomeFoul = lbl_HomeFoulValue.text.toString().toInt()
 
-        timerTextView = findViewById(R.id.lbl_GameTime_Value)
-        startTimer(10 * 60 * 1000)
-
-        btn_HomeFoulAdd.setOnClickListener{
+        btn_HomeFoul_Add.setOnClickListener {
             int_HomeFoul++
             if(int_HomeFoul >= 6){
                 int_HomeFoul=6
@@ -34,7 +42,7 @@ class PROscore_Junior : AppCompatActivity() {
             }
         }
 
-        btn_HomeFoulSub.setOnClickListener{
+        btn_HomeFoul_Sub.setOnClickListener {
             int_HomeFoul--
             if(int_HomeFoul <= 0){
                 int_HomeFoul=0
@@ -44,13 +52,12 @@ class PROscore_Junior : AppCompatActivity() {
             }
         }
 
-        val btn_GuestFoulAdd = findViewById<Button>(R.id.btn_GuestFoul_Add)
-        val btn_GuestFoulSub = findViewById<Button>(R.id.btn_GuestFoul_Sub)
+        val btn_GuestFoul_Add = findViewById<Button>(R.id.btn_GuestFoul_Add)
+        val btn_GuestFoul_Sub = findViewById<Button>(R.id.btn_GuestFoul_Sub)
         val lbl_GuestFoulValue = findViewById<TextView>(R.id.lbl_Guest_Foul_Value)
-
         var int_GuestFoul = lbl_GuestFoulValue.text.toString().toInt()
 
-        btn_GuestFoulAdd.setOnClickListener{
+        btn_GuestFoul_Add.setOnClickListener {
             int_GuestFoul++
             if(int_GuestFoul >= 6){
                 int_GuestFoul=6
@@ -60,7 +67,7 @@ class PROscore_Junior : AppCompatActivity() {
             }
         }
 
-        btn_GuestFoulSub.setOnClickListener{
+        btn_GuestFoul_Sub.setOnClickListener {
             int_GuestFoul--
             if(int_GuestFoul <= 0){
                 int_GuestFoul=0
@@ -70,6 +77,55 @@ class PROscore_Junior : AppCompatActivity() {
             }
         }
     }
+
+    private fun setupScores() {
+        val btn_HomeScore_Add = findViewById<Button>(R.id.btn_HomeScore_Add)
+        val btn_HomeScore_Sub = findViewById<Button>(R.id.btn_HomeScore_Sub)
+        val lbl_HomeScore_Value = findViewById<TextView>(R.id.lbl_Home_Score_Value)
+        var int_HomeScore = lbl_HomeScore_Value.text.toString().toInt()
+
+        btn_HomeScore_Add.setOnClickListener {
+            int_HomeScore++
+            if(int_HomeScore>=200){
+                int_HomeScore=0
+            }
+            lbl_HomeScore_Value.text = String.format("%02d",int_HomeScore)
+        }
+
+        btn_HomeScore_Sub.setOnClickListener {
+            int_HomeScore--
+            if(int_HomeScore<0){
+                int_HomeScore=199
+            }
+            lbl_HomeScore_Value.text = String.format("%02d",int_HomeScore)
+        }
+
+        val btn_GuestScore_Add = findViewById<Button>(R.id.btn_GuestScore_Add)
+        val btn_GuestScore_Sub = findViewById<Button>(R.id.btn_GuestScore_Sub)
+        val lbl_GuestScore_Value = findViewById<TextView>(R.id.lbl_Guest_Score_Value)
+        var int_GuestScore = lbl_GuestScore_Value.text.toString().toInt()
+
+        btn_GuestScore_Add.setOnClickListener {
+            int_GuestScore++
+            if(int_GuestScore>=200){
+                int_GuestScore=0
+            }
+            lbl_GuestScore_Value.text = String.format("%02d",int_GuestScore)
+        }
+
+        btn_GuestScore_Sub.setOnClickListener {
+            int_GuestScore--
+            if(int_GuestScore<0){
+                int_GuestScore=199
+            }
+            lbl_GuestScore_Value.text = String.format("%02d",int_GuestScore)
+        }
+
+
+    }
+
+
+
 
     private fun startTimer(timeInMillis: Long) {
         timer = object : CountDownTimer(timeInMillis, 100) { // update every 100ms
