@@ -21,7 +21,7 @@ class PROscore_Junior : AppCompatActivity() {
 
         var int_HomeFoul = lbl_HomeFoulValue.text.toString().toInt()
 
-        timerTextView = findViewById(R.id.lbl_GameTime)
+        timerTextView = findViewById(R.id.lbl_GameTime_Value)
         startTimer(10 * 60 * 1000)
 
         btn_HomeFoulAdd.setOnClickListener{
