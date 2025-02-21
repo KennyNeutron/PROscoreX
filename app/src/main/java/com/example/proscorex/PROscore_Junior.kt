@@ -10,6 +10,8 @@ class PROscore_Junior : AppCompatActivity() {
 
     private lateinit var  timerTextView: TextView
     private var timer: CountDownTimer? = null
+    private var TimeLeftInMillis: Long = 10 * 60 * 1000 //10 Minutes
+    private var TimeStarted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +23,11 @@ class PROscore_Junior : AppCompatActivity() {
         //Initialize Scores
         setupScores()
 
+        //Initialize Timer
+        setupTimeControls()
+
         //Start Game Timer
         timerTextView = findViewById(R.id.lbl_GameTime_Value)
-        startTimer(10 * 60 * 1000) // 10 minutes
     }
 
     private fun setupFouls() {
@@ -120,16 +124,29 @@ class PROscore_Junior : AppCompatActivity() {
             }
             lbl_GuestScore_Value.text = String.format("%02d",int_GuestScore)
         }
-
-
     }
 
+    private fun setupTimeControls() {
+        val btn_Start = findViewById<Button>(R.id.btn_Start)
+        val btn_Pause = findViewById<Button>(R.id.btn_Pause)
 
-
-
+        btn_Start.setOnClickListener{
+            if(!TimeStarted){
+                startTimer(TimeLeftInMillis)
+                TimeStarted = true
+            }
+        }
+        btn_Pause.setOnClickListener{
+            if(TimeStarted){
+                pauseTimer()
+                TimeStarted = false
+            }
+        }
+    }
     private fun startTimer(timeInMillis: Long) {
         timer = object : CountDownTimer(timeInMillis, 100) { // update every 100ms
             override fun onTick(millisUntilFinished: Long) {
+                TimeLeftInMillis = millisUntilFinished
                 val minutes = (millisUntilFinished / 1000) / 60
                 val seconds = (millisUntilFinished / 1000) % 60
                 val millis = (millisUntilFinished % 1000) / 100
@@ -140,6 +157,10 @@ class PROscore_Junior : AppCompatActivity() {
                 timerTextView.text = "00:00:0"
             }
         }.start()
+    }
+
+    private fun pauseTimer(){
+        timer?.cancel()
     }
 
     override fun onDestroy() {
